@@ -1,11 +1,894 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import SideMenu from "../components/SideMenu.astro";
+import imageHome from "../assets/image4.jpg";
+import imageStory from "../assets/image2.jpg";
+import imageSchedule from "../assets/image1.jpg";
+import imageParty from "../assets/image5.jpg";
+import imageTravel from "../assets/image3.jpg";
+import imageRsvp from "../assets/image1.jpg";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const sectionImages = {
+	home: {
+		src: imageHome,
+		alt: "Hannah and Charlie smiling together in Greece",
+	},
+	story: { src: imageStory, alt: "Sunset drinks overlooking the Aegean" },
+	schedule: { src: imageSchedule, alt: "Champagne toast at the villa" },
+	party: { src: imageParty, alt: "Coastal view of Ios accommodations" },
+	travel: { src: imageTravel, alt: "Ferry arriving at Ios port" },
+	rsvp: { src: imageRsvp, alt: "Evening celebration under string lights" },
+};
+
+const menuItems = [
+	{ id: "home", label: "Welcome" },
+	{ id: "story", label: "Wedding Weekend" },
+	{ id: "schedule", label: "Honeymoon Fund" },
+	{ id: "party", label: "Where to Stay" },
+	{ id: "travel", label: "Travel & Tips" },
+	{ id: "rsvp", label: "Q&A" },
+];
 ---
 
 <Layout>
-	<Welcome />
+	<div class="relative min-h-screen bg-blush text-midnight">
+		<SideMenu items={menuItems} />
+		<div class="flex flex-col md:flex-row">
+			<aside
+				class="relative hidden overflow-hidden bg-midnight/20 md:sticky md:top-0 md:block md:h-screen md:w-2/3"
+			>
+				<div
+					class="absolute inset-0 bg-gradient-to-br from-midnight/40 via-midnight/10 to-transparent"
+				>
+				</div>
+				{
+					Object.entries(sectionImages).map(([id, config]) => {
+						const imageSrc =
+							typeof config.src === "string"
+								? config.src
+								: config.src.src;
+						return (
+							<div
+								data-section-image={id}
+								class="section-image absolute inset-0"
+							>
+								<img
+									src={imageSrc}
+									alt={config.alt}
+									class="h-full w-full object-cover"
+									loading="lazy"
+								/>
+								<div class="absolute inset-0 bg-gradient-to-tr from-midnight/50 via-midnight/20 to-transparent" />
+							</div>
+						);
+					})
+				}
+			</aside>
+			<main
+				id="content-scroll"
+				class="relative h-full w-full bg-white px-0 md:h-screen md:w-1/3 md:overflow-y-auto md:px-10"
+			>
+				<section
+					id="home"
+					data-image="home"
+					class="content-section md:border-b md:scroll-mt-32 md:pb-24"
+				>
+					<div class="md:hidden">
+						<div class="overflow-hidden">
+							<img
+								src={typeof sectionImages.home.src === "string"
+									? sectionImages.home.src
+									: sectionImages.home.src.src}
+								alt={sectionImages.home.alt}
+								class="h-[50%] w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+					<div
+						class="mx-auto p-8 md:min-h-[100vh] flex max-w-3xl flex-col items-center gap-6 text-center justify-center md:py-0"
+					>
+						<span class="text-xs uppercase tracking-[0.6em]">
+							Saturday 23rd August 2026 · Cycladic Gem Luxury
+							Villa · Ios Island, Greece
+						</span>
+						<h1
+							class="font-serif text-5xl leading-tight sm:text-6xl md:text-7xl"
+						>
+							Hannah & Charlie
+						</h1>
+						<p class="max-w-2xl text-lg text-midnight/80">
+							We are so excited to celebrate with the people we
+							love most. Scroll through the weekend details and
+							RSVP so we can plan the festivities together.
+						</p>
+					</div>
+				</section>
+
+				<section
+					id="story"
+					data-image="story"
+					class="content-section md:border-b md:scroll-mt-32 md:py-24"
+				>
+					<div class="md:hidden">
+						<div class="overflow-hidden">
+							<img
+								src={typeof sectionImages.story.src === "string"
+									? sectionImages.story.src
+									: sectionImages.story.src.src}
+								alt={sectionImages.story.alt}
+								class="h-[50%] w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+					<div class="mx-auto py-8 flex max-w-3xl flex-col gap-10">
+						<div class="space-y-3 text-center md:text-left">
+							<span class="text-xs uppercase">
+								Wedding Weekend
+							</span>
+							<h2 class="font-serif text-4xl md:text-5xl">
+								Schedule
+							</h2>
+							<p class="text-base text-midnight/70">
+								Plans are still taking shape. Here's what to
+								expect so you can book travel and start the
+								countdown.
+							</p>
+						</div>
+						<div class="space-y-12">
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<header
+									class="space-y-2 text-center md:text-left"
+								>
+									<p
+										class="text-xs uppercase tracking-[0.45em] text-midnight/50"
+									>
+										Friday 21 August 2026
+									</p>
+									<h3 class="font-serif text-3xl">
+										Pre-Wedding Party
+									</h3>
+								</header>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									No RSVP needed, but feel free to build this
+									into your travel plans. We'll gather in
+									Chora for sunset drinks and see where the
+									night takes us—starting sophisticated and
+									Instagrammable, then bar-hopping as the
+									evening rolls on.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									If you're arriving on Friday, sunset is
+									usually around 7:30–8:00&nbsp;pm, so plan to
+									meet us for a 7:00&nbsp;pm kickoff.
+								</p>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<header
+									class="space-y-2 text-center md:text-left"
+								>
+									<p
+										class="text-xs uppercase tracking-[0.45em] text-midnight/50"
+									>
+										Sunday 23 August 2026
+									</p>
+									<h3 class="font-serif text-3xl">
+										Wedding Day
+									</h3>
+								</header>
+								<div
+									class="space-y-3 text-base leading-relaxed text-midnight/80"
+								>
+									<p>
+										<strong>Location:</strong>
+										<a
+											href="https://cycladicgem.com/"
+											target="_blank"
+											rel="noreferrer"
+											class="ml-1 underline"
+										>
+											Cycladic Gem Luxury Villa
+										</a>
+										<br />
+										Kolitsani, Ios Island 840&nbsp;01, Greece
+									</p>
+									<p>
+										Welcome drinks are expected to begin
+										around 4:00&nbsp;pm. Please plan travel
+										with that in mind.
+									</p>
+									<p>
+										This is an adults-only celebration so
+										everyone can fully relax. Expect warm
+										island weather and a gentle breeze from
+										the peninsula—afternoon sun, sunset
+										behind us, and dancing well into the
+										night with no venue curfew.
+									</p>
+									<p>
+										Dress code note: trousers for the gents,
+										please, for photo purposes. Jackets and
+										ties are optional (and encouraged to
+										become headwear by 11&nbsp;pm).
+									</p>
+									<p>
+										Need transport? Our planner's brother
+										runs a local transfer service and taxis
+										run late into the night. We'll
+										coordinate any specific departures you
+										need.
+									</p>
+								</div>
+								<div class="pt-2">
+									<a
+										href="#rsvp"
+										class="inline-flex items-center justify-center rounded-full bg-midnight px-8 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-midnight/90"
+									>
+										RSVP – Wedding Day
+									</a>
+								</div>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<header
+									class="space-y-2 text-center md:text-left"
+								>
+									<p
+										class="text-xs uppercase tracking-[0.45em] text-midnight/50"
+									>
+										Monday 24 August 2026
+									</p>
+									<h3 class="font-serif text-3xl">
+										The Day-After BBQ
+									</h3>
+								</header>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Everyone is invited back to the villa to
+									keep the celebrations going. Parents, kids,
+									and extended family are all welcome—thank
+									you for making the trip!
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Expect a relaxed day with BBQ, drinks, a
+									small pool, a private rocky beach, and
+									canoes. Bring swimwear and stay all day or
+									drop in when it suits.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Arrival time will be confirmed closer to the
+									date—we're anticipating mid-afternoon until
+									late.
+								</p>
+							</article>
+						</div>
+					</div>
+				</section>
+
+				<section
+					id="schedule"
+					data-image="schedule"
+					class="content-section md:border-b md:scroll-mt-32 md:py-24"
+				>
+					<div class="md:hidden">
+						<div class="overflow-hidden">
+							<img
+								src={typeof sectionImages.schedule.src ===
+								"string"
+									? sectionImages.schedule.src
+									: sectionImages.schedule.src.src}
+								alt={sectionImages.schedule.alt}
+								class="h-[50%] w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+					<div class="mx-auto py-8 flex max-w-3xl flex-col gap-6">
+						<div class="space-y-3 text-center md:text-left">
+							<span class="text-xs uppercase">
+								Honeymoon Fund
+							</span>
+							<h2 class="font-serif text-4xl md:text-5xl">
+								Kickstarting married life
+							</h2>
+						</div>
+						<p class="text-lg leading-relaxed text-midnight/80">
+							Your presence means the world to us, and we know the
+							effort it takes to join an overseas
+							celebration—especially one that requires a ferry
+							ride. We are not expecting gifts.
+						</p>
+						<p class="text-lg leading-relaxed text-midnight/80">
+							If you'd like to help us kick off married life,
+							we've set up a honeymoon fund. There's absolutely no
+							pressure—only contribute if it feels right for you.
+						</p>
+						<p class="text-base leading-relaxed text-midnight/70">
+							We'll share contribution details soon. Drop us a
+							message if you'd like them in the meantime.
+						</p>
+					</div>
+				</section>
+
+				<section
+					id="party"
+					data-image="party"
+					class="content-section md:border-b md:scroll-mt-32 md:py-24"
+				>
+					<div class="md:hidden">
+						<div class="overflow-hidden">
+							<img
+								src={typeof sectionImages.party.src === "string"
+									? sectionImages.party.src
+									: sectionImages.party.src.src}
+								alt={sectionImages.party.alt}
+								class="h-[50%] w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+					<div class="mx-auto py-8 flex max-w-4xl flex-col gap-8">
+						<div class="space-y-3 text-center md:text-left">
+							<span class="text-xs uppercase">
+								Areas of Ios & Where to Stay
+							</span>
+							<h2 class="font-serif text-4xl md:text-5xl">
+								Find your perfect base
+							</h2>
+							<p class="text-base text-midnight/70">
+								Ios has plenty of villas, hotels, and Airbnbs.
+								Here are the main areas to consider—message us
+								if you want help sense-checking a booking.
+							</p>
+						</div>
+						<div class="space-y-8">
+							<article
+								class="space-y-3 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">The Port</h3>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Convenient for ferries with lots of
+									accommodation options. Paralia Gialos beach
+									is long, sandy, and calm—the perfect spot
+									for laid-back swims and slightly lower
+									prices than busier beaches.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									There's a 25-minute uphill walk to Chora
+									(downhill after a night out) or a quick taxi
+									if you want to save your legs.
+								</p>
+							</article>
+
+							<article
+								class="space-y-3 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">Chora</h3>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									The hilltop heart of Ios, filled with
+									whitewashed lanes, bars, and restaurants.
+									Sunset hotspots Alma Suites and Ios Club are
+									here, along with the island's most vibrant
+									nightlife.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Be prepared for lively evenings and plan
+									transport to beaches via bus, quad bike, or
+									a scenic walk.
+								</p>
+							</article>
+
+							<article
+								class="space-y-3 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">Milopotas</h3>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									The island's main beach area—think water
+									sports, beachfront restaurants, and options
+									for every budget from sand-side hotels to
+									hillside apartments.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									It's a 20–30 minute walk (or minutes by
+									taxi/quad) up to Chora. Bars wind down as
+									people head uphill, except the iconic FarOut
+									Beach Club which keeps the music going.
+								</p>
+							</article>
+						</div>
+					</div>
+				</section>
+
+				<section
+					id="travel"
+					data-image="travel"
+					class="content-section md:border-b md:scroll-mt-32 md:py-24"
+				>
+					<div class="md:hidden">
+						<div class="overflow-hidden">
+							<img
+								src={typeof sectionImages.travel.src ===
+								"string"
+									? sectionImages.travel.src
+									: sectionImages.travel.src.src}
+								alt={sectionImages.travel.alt}
+								class="h-[50%] w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+					<div class="mx-auto py-8 flex max-w-4xl flex-col gap-12">
+						<div class="space-y-3 text-center md:text-left">
+							<span class="text-xs uppercase">
+								Travel & Tips
+							</span>
+							<h2 class="font-serif text-4xl md:text-5xl">
+								Ios essentials
+							</h2>
+						</div>
+						<div class="space-y-10">
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">
+									Getting to Ios
+								</h3>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Ios is only accessible by ferry (none of us
+									has a helicopter—yet). We recommend flying
+									into Santorini and catching the
+									Santorini–Ios ferry; it's usually the
+									fastest and most budget-friendly option.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Our 2025 experience: Santorini → Ios in
+									1&nbsp;hr&nbsp;30&nbsp;min for €15 each, and
+									Ios → Santorini in 45&nbsp;min for €35 with
+									advance booking at the start of the season.
+									Prices can reach ~€65 in peak season or last
+									minute.
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Mykonos is the next easiest hub. Crete works
+									too, but ferries are typically 3–4× the
+									price. Ferry schedules are seasonal and
+									usually released around Easter 2026—don't
+									panic if you can't see them yet.
+								</p>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">
+									Travel once you're there
+								</h3>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Our wedding planner's brother, Kostas, runs
+									a private hire business and can help with
+									transfers. There's also a regular coach
+									(with air conditioning) running every 15
+									minutes between the port, Chora, and
+									Milopotas for €2 per person (cash preferred,
+									card available at the port).
+								</p>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Taxis are plentiful. Quad bikes are a fun
+									way to zip around hills—expect about €40 per
+									day with discounts for longer rentals.
+								</p>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">
+									What to do in Ios
+								</h3>
+								<ul
+									class="space-y-2 text-base leading-relaxed text-midnight/80"
+								>
+									<li>
+										Wander Chora's hillside lanes and
+										traditional shops.
+									</li>
+									<li>
+										Toast sunset at Ios Club or Alma Suites
+										(call ahead to check for private
+										events).
+									</li>
+									<li>
+										Day-trip to Manganari Beach for
+										tranquil, shallow waters.
+									</li>
+									<li>
+										Seek out quieter coves like Papa,
+										Kalamos, Psathi, or Tzamaria beaches.
+									</li>
+									<li>
+										Visit the Odysseas Elytis Theatre and
+										the nearby Gaiti-Simosi Museum.
+									</li>
+									<li>
+										Hop on a boat trip or try your hand at
+										water sports.
+									</li>
+									<li>
+										Climb to the Chapel of Agios Nikolaos
+										for panoramic views.
+									</li>
+									<li>
+										Say yes to the Ios cheese factory
+										experience—cheese lovers, you know who
+										you are.
+									</li>
+								</ul>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">Island tips</h3>
+								<ul
+									class="space-y-2 text-base leading-relaxed text-midnight/80"
+								>
+									<li>
+										Carry cash—taxis and some tavernas
+										prefer it, and discounts are sometimes
+										offered for cash payments.
+									</li>
+									<li>
+										Ferries can book out fast; plan when you
+										can, but remember schedules appear
+										closer to summer.
+									</li>
+								</ul>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">
+									Restaurant suggestions
+								</h3>
+								<ul
+									class="space-y-2 text-base leading-relaxed text-midnight/80"
+								>
+									<li>
+										<strong>Sainis Taverna</strong> (Chora) –
+										traditional Greek fare with generous portions.
+									</li>
+									<li>
+										<strong>Katogi</strong> (Chora) – incredible
+										Greek tapas; book ahead.
+									</li>
+									<li>
+										<strong>Agosto</strong> (Chora) – run by
+										our caterers, serving beautiful dishes and
+										wine.
+									</li>
+									<li>
+										<strong>Ciao Bella</strong> (Chora) – homemade
+										pizza for a chilled-out evening.
+									</li>
+									<li>
+										<strong>Drakos Tavern</strong> (Milopotas)
+										– fresh seafood right on the water.
+									</li>
+									<li>
+										<strong>Remezzo</strong> (Port) – modern
+										breakfast spot (hello, avocado toast).
+									</li>
+									<li>
+										<strong>Beach House Ios</strong> (Port/Paralia
+										Gialos) – relaxed lunch with great service.
+									</li>
+								</ul>
+							</article>
+
+							<article
+								class="space-y-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+							>
+								<h3 class="font-serif text-2xl">
+									Bars we love
+								</h3>
+								<ul
+									class="space-y-2 text-base leading-relaxed text-midnight/80"
+								>
+									<li>Ios Club</li>
+									<li>Alma Sunset Bar &amp; Suites</li>
+									<li>Garden of Ios</li>
+									<li>Click Cocktail Bar</li>
+								</ul>
+							</article>
+						</div>
+					</div>
+				</section>
+
+				<section
+					id="rsvp"
+					data-image="rsvp"
+					class="content-section md:scroll-mt-32 md:py-24"
+				>
+					<div class="md:hidden">
+						<div class="overflow-hidden">
+							<img
+								src={typeof sectionImages.rsvp.src === "string"
+									? sectionImages.rsvp.src
+									: sectionImages.rsvp.src.src}
+								alt={sectionImages.rsvp.alt}
+								class="h-[50%] w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+					<div class="mx-auto py-8 flex max-w-4xl flex-col gap-10">
+						<div class="space-y-3 text-center md:text-left">
+							<span class="text-xs uppercase">
+								Q&amp;A &amp; RSVP
+							</span>
+							<h2 class="font-serif text-4xl md:text-5xl">
+								Need the details?
+							</h2>
+							<p class="text-base text-midnight/70">
+								If you still have questions after reading
+								through everything else, we’ve collected the
+								quick answers here.
+							</p>
+						</div>
+						<div
+							class="space-y-6 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur"
+						>
+							<p
+								class="text-sm uppercase tracking-[0.4em] text-midnight/50"
+							>
+								RSVP deadline
+							</p>
+							<p class="font-serif text-2xl text-midnight">
+								Please RSVP by 1 December 2025
+							</p>
+							<div class="grid gap-5 grid-cols-1">
+								<h3 class="font-serif text-xl">
+									Still deciding?
+								</h3>
+								<p
+									class="text-base leading-relaxed text-midnight/80"
+								>
+									Drop either of us a WhatsApp if you have
+									questions—we're happy to help with
+									logistics, travel, or anything else.
+								</p>
+								<div class="space-y-4">
+									<h3 class="font-serif text-xl">
+										Dress code
+									</h3>
+									<p
+										class="text-base leading-relaxed text-midnight/80"
+									>
+										Bridesmaids will be in olive green.
+										Gentlemen, please wear trousers for
+										photos. Jackets, ties, and late-night
+										tie headbands are optional but
+										encouraged.
+									</p>
+								</div>
+								<div class="space-y-4">
+									<h3 class="font-serif text-xl">
+										Getting to the venue
+									</h3>
+									<p
+										class="text-base leading-relaxed text-midnight/80"
+									>
+										Make your own way and shout if you need
+										help. There’s free, safe parking about
+										50&nbsp;m before the villa if you’re
+										driving—let us know and we’ll point you
+										to the exact spot.
+									</p>
+								</div>
+								<div class="space-y-4">
+									<h3 class="font-serif text-xl">Menu</h3>
+									<p
+										class="text-base leading-relaxed text-midnight/80"
+									>
+										We’re finalising the menu with our
+										caterers and will make sure every
+										preference and dietary need is
+										covered—we’ll check in with you closer
+										to the day.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<footer class="my-12 text-center text-sm">
+					<p class="font-serif text-2xl text-midnight">
+						Hannah & Charlie
+					</p>
+					<p class="mt-2 uppercase tracking-[0.4em]">
+						#CheersToTheMuzzlewhites
+					</p>
+					<p class="mt-4">
+						Questions? Email
+						<a
+							href="mailto:hannahandcharlie@email.com"
+							class="ml-1 underline"
+						>
+							hannahandcharlie@email.com
+						</a>
+					</p>
+				</footer>
+			</main>
+		</div>
+	</div>
+
+	<script is:inline>
+		if (typeof window !== "undefined") {
+			const scrollContainer = document.getElementById("content-scroll");
+			const sections = Array.from(
+				(scrollContainer ?? document).querySelectorAll(
+					".content-section",
+				),
+			);
+			const images = Array.from(
+				document.querySelectorAll("[data-section-image]"),
+			);
+			const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+			const smoothScrollToSection = (targetId) => {
+				if (!targetId) return;
+				const container =
+					mediaQuery.matches && scrollContainer
+						? scrollContainer
+						: window;
+				const rawTarget =
+					mediaQuery.matches && scrollContainer
+						? scrollContainer.querySelector(
+								`#${CSS.escape(targetId)}`,
+							)
+						: document.getElementById(targetId);
+				if (!(rawTarget instanceof HTMLElement)) return;
+				const target = rawTarget;
+				const top =
+					mediaQuery.matches && scrollContainer
+						? target.offsetTop
+						: target.getBoundingClientRect().top +
+							window.scrollY -
+							96;
+				if (container === window) {
+					window.scrollTo({ top, behavior: "smooth" });
+				} else {
+					container.scrollTo({ top, behavior: "smooth" });
+				}
+			};
+
+			const handleAnchorClick = (event) => {
+				const startElement =
+					event.target instanceof Element ? event.target : null;
+				const anchor = startElement?.closest('a[href^="#"]');
+				if (!anchor) return;
+				const href = anchor.getAttribute("href");
+				if (!href || href === "#") return;
+				const targetId = href.slice(1);
+				if (mediaQuery.matches && scrollContainer) {
+					event.preventDefault();
+					smoothScrollToSection(targetId);
+				}
+			};
+
+			document.addEventListener("click", handleAnchorClick);
+
+			if (sections.length) {
+				let activeId = null;
+				let observer;
+
+				const setActiveImage = (id) => {
+					if (!id || activeId === id) return;
+					activeId = id;
+					images.forEach((image) => {
+						const matches =
+							image.getAttribute("data-section-image") === id;
+						image.classList.toggle("is-active", matches);
+					});
+				};
+
+				const createObserver = () => {
+					if (observer) {
+						observer.disconnect();
+					}
+
+					const useCustomRoot = Boolean(
+						scrollContainer && mediaQuery.matches,
+					);
+					observer = new IntersectionObserver(
+						(entries) => {
+							entries.forEach((entry) => {
+								const section = entry.target;
+								const sectionId =
+									section.getAttribute("data-image");
+								section.classList.toggle(
+									"in-view",
+									entry.isIntersecting,
+								);
+								if (entry.isIntersecting && sectionId) {
+									setActiveImage(sectionId);
+								}
+							});
+						},
+						useCustomRoot
+							? { root: scrollContainer, threshold: 0.55 }
+							: {
+									root: null,
+									threshold: 0.35,
+									rootMargin: "-10% 0px -40% 0px",
+								},
+					);
+
+					sections.forEach((section) => observer.observe(section));
+
+					const initialSectionId =
+						sections[0]?.getAttribute("data-image");
+					if (initialSectionId) {
+						setActiveImage(initialSectionId);
+					}
+				};
+
+				createObserver();
+				mediaQuery.addEventListener("change", () => {
+					createObserver();
+					if (mediaQuery.matches && scrollContainer) {
+						const hash = window.location.hash.replace("#", "");
+						if (hash) {
+							smoothScrollToSection(hash);
+						}
+					}
+				});
+
+				const currentHash = window.location.hash.replace("#", "");
+				if (currentHash) {
+					smoothScrollToSection(currentHash);
+				}
+			}
+		}
+	</script>
 </Layout>
