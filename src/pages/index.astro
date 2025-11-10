@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import SideMenu from "../components/SideMenu.astro";
 import imageHome from "../assets/image4.jpg";
 import imageStory from "../assets/image2.jpg";
-import imageSchedule from "../assets/image1.jpg";
+import imageSchedule from "../assets/image6.jpg";
 import imageParty from "../assets/image5.jpg";
 import imageTravel from "../assets/image3.jpg";
 import imageRsvp from "../assets/image1.jpg";
@@ -89,8 +89,8 @@ const menuItems = [
 						class="mx-auto p-8 md:min-h-[100vh] flex max-w-3xl flex-col items-center gap-6 text-center justify-center md:py-0"
 					>
 						<span class="text-xs uppercase tracking-[0.6em]">
-							Sunday 23rd August 2026 · Cycladic Gem Luxury
-							Villa · Ios Island, Greece
+							Sunday 23rd August 2026 · Cycladic Gem Luxury Villa
+							· Ios Island, Greece
 						</span>
 						<h1
 							class="font-serif text-5xl leading-tight sm:text-6xl md:text-7xl"
@@ -126,7 +126,9 @@ const menuItems = [
 						class="mx-auto py-8 px-8 md:px-0 flex max-w-3xl flex-col gap-10"
 					>
 						<div class="space-y-3 text-center md:text-left">
-							<span class="text-xs uppercase tracking-[0.45em] text-midnight/50">
+							<span
+								class="text-xs uppercase tracking-[0.45em] text-midnight/50"
+							>
 								Wedding Weekend
 							</span>
 							<h2 class="font-serif text-4xl md:text-5xl">
@@ -724,9 +726,7 @@ const menuItems = [
 					<p class="mt-2 uppercase tracking-[0.4em]">
 						#CheersToTheMuzzlewhites
 					</p>
-					<p class="mt-4">
-						Questions? Just drop us a message
-					</p>
+					<p class="mt-4">Questions? Just drop us a message</p>
 					<p class="mt-4">
 						<strong>Hannah</strong> 07772138372
 					</p>
@@ -794,9 +794,12 @@ const menuItems = [
 
 			document.addEventListener("click", handleAnchorClick);
 
+			console.log("sections", sections);
+
 			if (sections.length) {
 				let activeId = null;
 				let observer;
+				const sectionRatios = new Map();
 
 				const setActiveImage = (id) => {
 					if (!id || activeId === id) return;
@@ -808,31 +811,65 @@ const menuItems = [
 					});
 				};
 
+				const updateActiveSection = () => {
+					let maxRatio = 0;
+					let maxSectionId = null;
+
+					sectionRatios.forEach((ratio, sectionId) => {
+						if (ratio > maxRatio) {
+							maxRatio = ratio;
+							maxSectionId = sectionId;
+						}
+					});
+
+					if (maxSectionId) {
+						setActiveImage(maxSectionId);
+					}
+				};
+
 				const createObserver = () => {
 					if (observer) {
 						observer.disconnect();
 					}
+					sectionRatios.clear();
 
 					const useCustomRoot = Boolean(
 						scrollContainer && mediaQuery.matches,
 					);
+
 					observer = new IntersectionObserver(
 						(entries) => {
 							entries.forEach((entry) => {
 								const section = entry.target;
 								const sectionId =
 									section.getAttribute("data-image");
+								console.log("sectionId.....", sectionId);
 								section.classList.toggle(
 									"in-view",
 									entry.isIntersecting,
 								);
-								if (entry.isIntersecting && sectionId) {
-									setActiveImage(sectionId);
+
+								if (sectionId) {
+									if (entry.isIntersecting) {
+										sectionRatios.set(
+											sectionId,
+											entry.intersectionRatio,
+										);
+									} else {
+										sectionRatios.set(sectionId, 0);
+									}
 								}
 							});
+							updateActiveSection();
 						},
 						useCustomRoot
-							? { root: scrollContainer, threshold: 0.55 }
+							? {
+									root: scrollContainer,
+									threshold: [
+										0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7,
+										0.8, 0.9, 1,
+									],
+								}
 							: {
 									root: null,
 									threshold: 0.35,
